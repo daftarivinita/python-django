@@ -1,0 +1,31 @@
+activate enviroment
+go to folder where you want to save project
+make django-admin startproject your_project_name
+cd to your project
+make app -- python manage.py startapp your_app_name
+code .
+add your app name in setting.py
+go to model.py inside your app
+make a class
+run migration commands in terminal
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py shell
+
+run import command - from users_app.models import User
+make instances using Users.objects.create()
+ClassName.objects.all().values() - shows all the values of a QuerySet (i.e. multiple instances
+User.objects.last().__dict__ to retrieve the last id 
+User.objects.first().__dict__
+
+to Update - movie_to_update = Movie.objects.get(id=42)	# let's retrieve a single movie,
+movie_to_update.description = "the answer to the universe"	# update one/some of its field values
+movie_to_update.title = "The Hitchhiker's Guide to the Galaxy"
+movie_to_update.save()	# then make sure all changes to the existing record get saved to the database
+
+movie_to_delete = Movie.objects.get(id=2)	# let's retrieve a single movie,
+movie_to_delete.delete()	# and then delete it
+
+User.objects.order_by('first_name') - to sort
+User.objects.order_by('-first_name') - to sort in descending order
+

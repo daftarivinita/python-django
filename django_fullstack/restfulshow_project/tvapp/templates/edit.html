@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <button><a href="/shows">Go Back</a></button>
+    <h1>place for creating editing form </h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/shows/{{new_show.id}}/update" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" value="{{new_show.title}}">
+        </div>
+        <div class="form-group">
+            <label for="network" class="form-label">Network:</label>
+            <input type="text" id="network" class="form-control" name="network" value="{{new_show.network}}">
+        </div>
+        <div class="form-group">
+            <label for="release_date" class="form-label">Release Date:</label>
+            <input type="date" id="release_date" class="form-control" name="release_date"
+                value="{{new_show.release_date|date:'Y-m-d'}}">
+        </div>
+        <div class="form-group">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="description" class="form-control">"{{new_show.description}}"</textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update">
+        </div>
+
+    </form>
+    <button><a href='/shows/{{new_show.id}}'>GO back</a></button>
+</body>
+
+</html>
+
+<!-- #not able to show release date and why i see midnight
+update url is not match -->

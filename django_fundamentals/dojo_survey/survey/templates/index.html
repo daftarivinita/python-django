@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="conatiner form-group">
+    <h1>Your Information</h1>
+    <form action = "/submit" method = "POST">
+        {% csrf_token %}
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name"><br>
+        <label for="location">Dojo Location:</label>
+        <select id="location" name="location">
+            <option value="Seattle">Seattle</option>
+            <option value="Chicago">Chicago</option>
+            <option value="LA">LA</option>
+            <option value="BayArea">Bay Area</option>
+        </select><br>
+        <label for="language">Favorite Language:</label>
+        <select id="language" name="language">
+            <option value="python">python</option>
+            <option value="java">java</option>
+            <option value="Javascript">Javascript</option>
+            <option value="ruby">Ruby</option>
+        </select><br>
+        
+        <input type="radio" name="gender" value="Male">
+        <label for="gender">Male</label>
+        <input type="radio" name="gender" value="Female">
+        <label for="gender">Female</label><br>
+
+        
+
+        {% for transport in transportation %}
+        <input type = "checkbox" value= "{{transport}}" name = "transport">
+        <label for = "{{transport}}">{{transport}}</label>
+        {% endfor %}<br>
+        
+        <label for="comment">Comment(optional):</label><br>
+        <textarea name = "comment"></textarea><br>
+        <input type = "submit" id = "button" value = "button">
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<table id = "foods" class="table table-dark">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for food in all_foods %}
+        <tr>
+            <td>{{food.name}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

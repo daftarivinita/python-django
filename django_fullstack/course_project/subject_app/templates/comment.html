@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>{{course_to_comment.id}}</h1>
+    <h2>{{course_to_comment.name}}</h2>
+    <h2>{{course_to_comment.description.content}}</h2>
+    <form action="/comment/{{course_to_comment.id}}/create" method="POST">
+        {% csrf_token %}
+        <label for="comment">COMMENT</label>
+        <textarea name="comment" rows="4" cols="50"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    <ul>
+        
+        {% for comment in course_to_comment.has_comments.all %}
+        <li>{{comment.content}}</li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>

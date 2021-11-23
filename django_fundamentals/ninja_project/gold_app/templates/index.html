@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Ninja Gold</title>
+</head>
+<body>
+    <div id="header">
+        <h1>Your Gold:<span>{{ request.session.random }}</span></h1>
+        <a href = "/reset">Restart</a>
+    </div>
+    <div id="gameForm">
+        <div class = 'form'>
+            <h2>Farm</h2>
+            <p>(earn 10-20 golds)</p>
+            <form action = "/farm/submit" method = "post" >
+                {% csrf_token %}
+                <input type="hidden" name="building" value="cave">
+                <button>Find Gold!</button>
+            </form>
+            <!-- <a href = "/farm/submit">Button</a> -->
+        </div> 
+        <div class = 'form'>
+            <h2>Cave</h2>
+            <p>(earn 5-10 golds)</p>
+            <form action = "/cave/submit" method = "post" >
+                {% csrf_token %}
+                <input type="hidden" name="building" value="cave">
+                <button>Find Gold!</button>
+            </form>
+            <!-- <a href = "/cave/submit">Button</a> -->
+        </div>
+        <div class = 'form'>
+            <h2>House</h2>
+            <p>(earn 0-5 golds)</p>
+            <form action = "/house/submit" method = "post">
+                {% csrf_token %}
+                <input type="hidden" name="building" value="cave">
+                <button>Find Gold!</button>
+            </form>
+            <!-- <a href = "/house/submit">Button</a> -->
+        </div>
+        <div class = 'form'>
+            <h2>Casino</h2>
+            <p>(earn/takes 0-50 golds)</p>
+            <form action = "casino/submit" method = "post" >
+                {% csrf_token %}
+                <input type="hidden" name="building" value="cave">
+                <button>Find Gold!</button>
+                
+            </form>
+            <!-- <a href = "casino/submit">Button</a> -->
+        </div>
+    </div>
+    
+    <textarea class = "win" id ={{request.session.result}}>
+        {% for activity in request.session.activities %}
+            {{ activity }}
+        {% endfor %}
+    </textarea>
+    
+    
+</body>
+</html>

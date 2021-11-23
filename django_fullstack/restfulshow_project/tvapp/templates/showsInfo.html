@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Info of a show</title>
+</head>
+
+<body>
+    <button><a href="/shows">Go Back</a></button>
+    <h1>TV Show {{shows.id}}</h1>
+    <p>Title: <span>{{shows.title}}</span></p>
+    <p>Release Date: <span>{{shows.release_date|date:"SHORT_DATE_FORMAT"}}</span></p>
+    <p>Description: <span>{{shows.description}}</span></p>
+    <p>Last Updated:<span>{{shows.updated_at}}</span> </p>
+    <a href='/shows/{{shows.id}}/edit'>Edit</a> | <a href='/shows/{{shows.id}}/destroy'>Delete</a>
+    >
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete this course?</h1>
+    <p>Name: {{course_to_delete.name}}</p>
+    <p>Description: {{course_to_delete.description.content}}</p>
+    <form action ="/goback" method ="POST">
+        {% csrf_token %}
+        <input type="hidden" name="{{course_to_delete.id}}" value="{{course_to_delete.name}}">
+        <input type= "submit" value= "NO">
+    </form>
+    <form action ="/{{course_to_delete.id}}/delete" method ="POST">
+        {% csrf_token %}
+        <input type="hidden" name="{{course_to_delete.id}}" value="{{course_to_delete.name}}">
+        <input type= "submit" value= "Yes! I want to delete this.">
+    </form>
+</body>
+</html>

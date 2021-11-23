@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{new_author.first_name}} {{new_author.last_name}}</h1>
+    <p>{{new_author.id}}</p>
+    <h2>Notes:</h2>
+    <p>{{new_author.notes}}</p>
+    <h2>Books:</h2>
+    {% for book in new_author.books.all %}
+    <p>{{book.title}}</p>
+    {% endfor %}
+<form action='/author/{{new_author.id}}/add' method= "POST">
+    print(book.id)
+    {% csrf_token %}
+        <label for="allbook">Add Book:</label>
+        <select id="allbook" name="allbook">
+            {% for book in all_books %}
+            {% if book not in new_author.books.all %}
+            <option value="{{book.id}}">{{book.title}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <input type = "submit">
+</form>
+</body>
+</html>

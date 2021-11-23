@@ -1,0 +1,57 @@
+body{
+    width:1200px;
+    border: 5px solid black;
+    padding: 30px;
+    margin: 0 auto;
+
+}
+h1 span{
+    border: 5px solid black;
+    padding:0 100px 0 5px;
+}
+#header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.win {
+    color: chartreuse;
+}
+.lose {
+    color: blue;
+}
+#gameForm{
+    display:flex;
+    justify-content: space-between;
+}
+.form{
+   
+    border: 5px solid black;
+    text-align: center;
+    width: 200px;
+    padding: 20px;
+    
+}
+textarea {
+    
+    margin-top: 30px;
+    overflow-y: scroll;
+    height: 20vh;
+    resize: none;
+    width: 100%;
+    border: 5px solid black;
+    border-radius: 5px;
+}
+a {
+    text-align: center;
+    text-decoration: none;
+    color:black;
+    background-color:grey;
+    border: 1px solid black;
+    height: 20px;
+    border-radius: 5px;
+    text-align: right;
+    padding: 5px;
+    
+
+}

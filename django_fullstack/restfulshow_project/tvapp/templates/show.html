@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">  
+    <title>Document</title>
+</head>
+<body>
+    <h1>details of all the shows</h1>
+    <button><a href = "/shows">Go Back</a></button>
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Network</th>
+                <th>Release Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for show in all_the_shows %}
+            <tr>
+                
+                <td>{{ show.id }}</td>
+                <td>{{ show.title }}</td>
+                <td>{{ show.network }}</td>
+                <td>{{ show.release_date}}</td>
+                <td><a href='/shows/{{show.id}}'>Show</a> | <a href='/shows/{{show.id}}/edit'>Edit</a> |
+                <form action='/shows/{{show.id}}/destroy' method="POST">
+                {% csrf_token %}
+                
+              
+                        <button class="btn btn-primary" type="submit">Delete</button>
+                </form></td>
+                
+            </tr>
+
+            {% endfor %}
+            
+        
+        </tbody>
+        <a href="/shows/new">Add a Show!</a>
+    </table>
+    
+</body>
+</html>

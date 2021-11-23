@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="">
+            <a href="/books">Home</a>
+            <form action="/logout" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary" type="submit">Logout</button>
+            </form>
+        </div>
+        <div>
+            {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            <h1>{{current_book.title}}</h1>
+            <p>{{current_book.author.name}}</p>
+            <h2>Reviews</h2>
+            {% for review in current_book.reviews.all %}
+            <p>{{review.rating}}</p>
+            <p><a href="/users/{{review.reviewed_by.id}}">{{review.reviewed_by.first_name}}</a>says: {{review.content}}
+            </p>
+
+            <p>Posted on {{review.created_at}}</p>
+            {% if review.reviewed_by.id == request.session.user_id %}
+            <!-- <form action="/books/{{current_book.id}}/{{review.id}}/destroy" method="POST">
+                {% csrf_token %}
+
+                <input class="btn btn-primary" type="submit" value="Delete Review">
+            </form> -->
+            <a class = "btn btn-primary" href= "/books/{{current_book.id}}/{{review.id}}/destroy">Delete Review</a>
+            {% endif %}
+            {% endfor %}
+
+        </div>
+        <div class="col-6">
+            <form action="/books/{{current_book.id}}/reviews" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="rating">Rating</label>
+                    <input name="rating" class="form-control" type="number" min="1" max="5">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="review">Add a Review:</label>
+                    <textarea name="review" class="form-control"></textarea>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Submit Review">
+            </form>
+        </div>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+
+</html>

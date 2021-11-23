@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add a new Book</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+        <div id="wrapper">
+                <a href="/books">Home</a>
+                <form action="/logout" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-primary" type="submit">Logout</button>
+                </form>
+                <div id="">
+                        <h1>Add a new Book Tite and Review:</h1>
+                </div>
+                {% if messages %}
+                <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <form action="/books/create" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                                <label class="form-label" for="title">Book Title</label>
+                                <input name="title" class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                                <label class="form-label" for="author">Choose from the list</label>
+                                <select name="author">
+                                        {% for author in all_author %}
+                                        <option value="{{author.id}}">{{author.name}}</option>
+                                        {% endfor %}
+                                </select>
+                                <label class="form-label" for="author">Add a new Author</label>
+                                <input name="new_author" class="form-control" type="text">
+                        </div>
+                        
+                        <div class="form-group">
+                                <label class="form-label" for="rating">Rating</label>
+                                <input name="rating" class="form-control" type="number" min="1" max="5">
+                        </div>
+                        <div class="form-group">
+                                <label class="form-label" for="review">Add a Review:</label>
+                                <textarea name="review" class="form-control"></textarea>
+                        </div>
+                        
+                        <input class="btn btn-primary" type="submit" value="Add Book and Review">
+                </form>
+        </div>
+</body>
+
+</html>

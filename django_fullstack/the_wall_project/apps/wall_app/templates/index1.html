@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="">
+            <h1>Welcome, {{user.first_name}} {{user.last_name}}</h1>
+            <form action="\wall\logoff" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="log off">
+            </form>
+            <form action="\wall\postmessages" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="messages">Messages</label>
+                    <textarea name="messages" class="form-control"></textarea>
+                </div>
+                <input type="hidden" name="{{user.id}}" value="{{user.id}}">
+                <!-- #what should be name and value in hidden input -->
+                <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+            <h4>This is a Message and Comment Section:</h4>
+            
+            {% for message in messages %}
+            <h5>Message Created by {{message.posted_by.first_name}} {{message.created_at|date:"F nS, Y"}} </h5>
+            <p>{{message.content}}</p>
+            {% if user.id == message.posted_by.id %}
+            <form action="/wall/{{message.id}}/deletemessage" method="POST">
+                {% csrf_token %}
+                <input type='submit' value="Delete Message">
+            </form>
+            {% endif %}
+            <ul>
+                {% for comment in message.message_comment.all %}
+                <p>{{comment.commented_by.first_name}} {{comment.commented_by.last_name}}{{comment.created_at}}</p>
+                <li>{{comment.content}}</li>
+                {% if user.id == comment.commented_by.id %}
+                <form action="/wall/{{comment.id}}/deletecomment" method="POST">
+                    {% csrf_token %}
+                    <input type='submit' value="Delete Comment">
+                </form>
+                {% endif %}
+                {% endfor %}
+                
+            </ul>
+            <form action="/wall/{{message.id}}/postcomments" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="comment">Comment Here:</label>
+                    <textarea name="comment" class="form-control"></textarea>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Comment">
+            </form>
+            {% endfor %}
+            
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+

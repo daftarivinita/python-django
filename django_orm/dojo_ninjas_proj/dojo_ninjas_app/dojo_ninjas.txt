@@ -1,0 +1,59 @@
+Create 3 new dojos
+>>> dojo1 = Dojo.objects.create(name = "Dojo 1", city = "Chicago", state = "Illinois")
+>>> dojo2 = Dojo.objects.create(name = "Dojo 2", city = "San Francisco", state = "California")
+>>> dojo3 = Dojo.objects.create(name = "Dojo 3", city = "Seattle", state = "Washington")
+
+Delete the first 3 dojos
+>>> dojo1.delete()
+>>> dojo2.delete()
+>>> dojo3.delete()
+or 
+>>> dojo = Dojo.objects.all()
+>>>dojo.delete()
+Create 3 more dojos
+>>> dojo4 = Dojo.objects.create(name = "Dojo 4", city = "New Chicago", state = "Illinois")
+>>> dojo5 = Dojo.objects.create(name = "Dojo 5", city = "Neo San Francisco", state = "California")
+>>> dojo6 = Dojo.objects.create(name = "Dojo 6", city = "Seattle 2: Seattle Harder", state = "Washington")
+
+Create 3 ninjas that belong to the first dojo
+>>> ninja1 = Ninja.objects.create(first_name = "Chet", last_name = "Guy", dojo = dojo4)
+>>> ninja2 = Ninja.objects.create(first_name = "Brett", last_name = "Guy", dojo = dojo4)
+>>> ninja3 = Ninja.objects.create(first_name = "Jettt", last_name = "Guy", dojo = dojo4)
+
+Create 3 ninjas that belong to the second dojo
+>>> ninja4 = Ninja.objects.create(first_name = "Yakko", last_name = "Warner", dojo = dojo5)
+>>> ninja5 = Ninja.objects.create(first_name = "Wakko", last_name = "Warner", dojo = dojo5)
+>>> ninja6 = Ninja.objects.create(first_name = "Dot", last_name = "Warner", dojo = dojo5)
+
+Create 3 ninjas that belong to the third dojo
+>>> ninja7 = Ninja.objects.create(first_name = "Samuel", last_name = "Douglas", dojo = dojo6)
+>>> ninja8 = Ninja.objects.create(first_name = "Jeffrey", last_name = "Douglas", dojo = dojo6)
+>>> ninja9 = Ninja.objects.create(first_name = "Michael", last_name = "Douglas", dojo = dojo6)
+
+Retrieve all ninjas from the first dojo
+>>> Dojo.objects.first().ninjas.all()
+
+Retrieve all ninjas from the last dojo
+>>> Dojo.objects.last().ninjas.all()
+
+Retrieve the last ninja's dojo
+>>> Ninja.objects.last().dojo
+
+
+Add a new text field called "desc" to your Dojo class
+>>> either default = "abc" give a default value
+>>> or null = True 
+>>> another option is to add attribute, run python manage.py makemigrations ...simplest option. Type 1 and hit enter. You'll then see a prompt that asks what value you would like: and then complete   the migration.
+
+Create a new dojo
+>>> Dojo.objects.create(name = "Dojo 7", city = "New, New, New York", state = "New York", desc = "It's new! It's so new!")
+
+class Author(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+class Book(models.Model):
+    title = models.CharField(max_length=255)
+    author = models.ForeignKey(Author, related_name="books", on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

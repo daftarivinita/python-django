@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="">
+            <h1>Welcome, {{current_user.first_name}} {{current_user.last_name}}</h1>
+            {% if messages %}
+            <ul class="messages">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endfor %}
+            </ul>
+            {% endif %}
+            {% if current_user.id == current_book.uploaded_by.id %}
+            
+
+            <form action="/books/edit/{{current_book.id}}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="title">Title</label>
+                    <input name="title" class="form-control" type="text" value= "{{ current_book.title }}">
+                </div>
+                <p>Added by {{current_book.uploaded_by.first_name}} {{current_book.uploaded_by.last_name}}</p>
+                <p>Added on {{current_book.created_at}}</p>
+                <p>Last updated on {{current_book.updated_at}}</p>
+                <div class="form-group">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea name="description" class="form-control">{{current_book.desc}}</textarea>
+                </div>
+                <input class="btn btn-primary" type="submit" value="Update">
+            </form>
+            <form action="/books/delete/{{current_book.id}}" method="POST">
+                {% csrf_token %}
+
+                <input class="btn btn-primary" type="submit" value="Delete">
+            </form>
+
+            {% else %}
+            <h3>{{ current_book.title }}</h3>
+            <p>Added by {{current_book.uploaded_by.first_name}} {{current_book.uploaded_by.last_name}}</p>
+            <p>Last updated on {{current_book.updated_at}}</p>
+
+            <p>{{current_book.desc}}</p>
+
+            {% endif %}
+        </div>
+        <div>
+            <ul>User who like this book:
+                {% if current_book.users_who_like.all|length == 0%}
+                <p>"Be the first one to like this book."</p>
+                {% endif %}
+
+                {% for user in current_book.users_who_like.all %}
+                <li>{{user.first_name}}
+                    {% if not user %}
+                    <p>"Be the first one to like this book"</p>
+                    {% endif %}
+                    {% if current_user.id == user.id %}
+                    <form action="/books/unfavorite/{{current_book.id}}" method="POST">
+                        {% csrf_token %}
+
+                        <input class="btn btn-primary" type="submit" value="UnFavorite">
+                    </form>
+                    {% endif %}
+                </li>
+                {% endfor %}
+                {% if current_book not in current_user.liked_books.all %}
+                <form action="/books/favorite/{{current_book.id}}" method="POST">
+                    {% csrf_token %}
+
+                    <input class="btn btn-primary" type="submit" value="Favorite">
+                </form>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>

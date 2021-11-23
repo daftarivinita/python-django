@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Registration Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="col-sm-6 bg-secondary">
+            <h2>Registration</h2>
+
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="first_name">First Name</label>
+                    <input name="first_name" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="last_name">Last Name</label>
+                    <input name="last_name" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="birthdate">Birthdate</label>
+                    <input name="birthdate" class="form-control" type="date" >
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input name="email" class="form-control" type="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input name="password" class="form-control" type="password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="re_password">Confirm Password</label>
+                    <input name="re_password" class="form-control" type="password">
+                </div>
+                <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+        </div>
+        <div class="col-sm-6 bg-secondary">
+            <h2>LOGIN</h2>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input name="email" class="form-control" type="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input name="password" class="form-control" type="password">
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages%}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+
+</html>
